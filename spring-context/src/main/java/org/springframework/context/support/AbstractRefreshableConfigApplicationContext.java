@@ -39,6 +39,7 @@ import org.springframework.util.StringUtils;
 public abstract class AbstractRefreshableConfigApplicationContext extends AbstractRefreshableApplicationContext
 		implements BeanNameAware, InitializingBean {
 
+	//定义配置路径, 默认是个字符串数组
 	@Nullable
 	private String[] configLocations;
 
@@ -78,6 +79,7 @@ public abstract class AbstractRefreshableConfigApplicationContext extends Abstra
 			Assert.noNullElements(locations, "Config locations must not be null");
 			this.configLocations = new String[locations.length];
 			for (int i = 0; i < locations.length; i++) {
+				//解析给定路径
 				this.configLocations[i] = resolvePath(locations[i]).trim();
 			}
 		}
@@ -122,6 +124,13 @@ public abstract class AbstractRefreshableConfigApplicationContext extends Abstra
 	 * @see org.springframework.core.env.Environment#resolveRequiredPlaceholders(String)
 	 */
 	protected String resolvePath(String path) {
+		//getEnvironment() 程序到这里还没有读取过任何配置文件中的属性
+		//getEnvironment() 方法里配置了一堆属性 比如jvm信息 主机信息(主机名zlc啥的)
+		// StandardEnvironment类中
+		// System environment property source name: {@value}.  系统环境
+		// public static final String SYSTEM_ENVIRONMENT_PROPERTY_SOURCE_NAME = "systemEnvironment";
+		// JVM system properties property source name: {@value}. 系统属性
+		//	public static final String SYSTEM_PROPERTIES_PROPERTY_SOURCE_NAME = "systemProperties";
 		return getEnvironment().resolveRequiredPlaceholders(path);
 	}
 

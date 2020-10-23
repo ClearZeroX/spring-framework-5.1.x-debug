@@ -1,7 +1,6 @@
 package com.zlc;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -14,7 +13,9 @@ public class Test {
 //		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 //		TestService bean = context.getBean(TestService.class);
 
-		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+		ApplicationContext ac = new MyClassPathXmlApplicationContext("applicationContext.xml");
+//		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+//		ApplicationContext ac = new ClassPathXmlApplicationContext("spring-${username}.xml");
 		Person person = ac.getBean(Person.class);
 		System.out.println(person);
 	}
